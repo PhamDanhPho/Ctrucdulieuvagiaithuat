@@ -172,22 +172,29 @@ public:
         	cout << "Khong co cong viec nao chua thuc hien! " << endl;
     	}
     }
-    void xemCVtungayadenb(DayNode* node, int startDay, int endDay) {
+    void xemCVtungayadenb(DayNode* node, int startDay, int endDay, bool &found) {
         if (!node) return;
         if (node->day >= startDay) {
-            xemCVtungayadenb(node->left, startDay, endDay);
+            xemCVtungayadenb(node->left, startDay, endDay, found);
         }
         if (node->day >= startDay && node->day <= endDay) {
+        	if(!found){
+        		cout << "CV tu ngay " << startDay << " toi ngay " << endDay << ":" << endl;
+        		found = true;
+			}
             cout << "CV cua ngay " << node->day << ":" << endl;
             node->hienthiCV();
         }
         if (node->day <= endDay) {
-            xemCVtungayadenb(node->right, startDay, endDay);
+            xemCVtungayadenb(node->right, startDay, endDay, found);
         }
     }
     void xemCVtungayadenb(int startDay, int endDay) {
-        cout << "CV tu ngay " << startDay << " toi ngay " << endDay << ":" << endl;
-        xemCVtungayadenb(root, startDay, endDay);
+        bool found = false;
+        xemCVtungayadenb(root, startDay, endDay, found);
+        if (!found) { 
+        	cout << "Khong co cong viec nao tu ngay " << startDay << " toi ngay " << endDay << endl;
+    	}
     }
     void xoaCV(DayNode* dayNode, int hour) {
         CV* current = dayNode->dsCV;
