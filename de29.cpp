@@ -116,7 +116,7 @@ public:
         current = current->next;
     }
     xemCVtheotinhchat(node->right, priority, found);
-}
+	}
 	void xemCVtheotinhchat(string priority) {
     	bool found = false;
     	xemCVtheotinhchat(root, priority, found);
@@ -124,39 +124,53 @@ public:
         	cout << "Khong co cong viec nao cho muc do uu tien " << priority << endl;
     	}
 	}
-    void xemCVdahoanthanh(DayNode* node) {
+    void xemCVdahoanthanh(DayNode* node, bool &found) {
         if (!node) return;
-        xemCVdahoanthanh(node->left);
+        xemCVdahoanthanh(node->left, found);
         CV* current = node->dsCV;
         while (current) {
             if (current->completed) {
+            	if(!found){
+            		cout << "Cac CV da hoan thanh: " << endl;
+            		found = true;
+				}
                 cout << "Day: " << node->day << " | Hour: " << current->startHour 
                      << " | Name: " << current->tenCV << " | Completed: Yes" << endl;
             }
             current = current->next;
         }
-        xemCVdahoanthanh(node->right);
+        xemCVdahoanthanh(node->right, found);
     }
     void xemCVdahoanthanh() {
-        cout << "Cac CV da hoan thanh: " << endl;
-        xemCVdahoanthanh(root);
+    	bool found = false;
+        xemCVdahoanthanh(root, found);
+        if (!found) { 
+        	cout << "Khong co cong viec nao da hoan thanh! " << endl;
+    	}
     }
-    void xemCVchuathuchien(DayNode* node) {
+    void xemCVchuathuchien(DayNode* node, bool &found) {
         if (!node) return;
-        xemCVchuathuchien(node->left);
+        xemCVchuathuchien(node->left, found);
         CV* current = node->dsCV;
         while (current) {
             if (!current->completed) {
+            	if(!found){
+            		cout << "CV dang cho xu ly:" << endl;
+            		found = true;
+				}
                 cout << "Day: " << node->day << " | Hour: " << current->startHour 
                      << " | Name: " << current->tenCV << " | Completed: No" << endl;
             }
             current = current->next;
         }
-        xemCVchuathuchien(node->right);
+        xemCVchuathuchien(node->right, found);
     }
     void xemCVchuathuchien() {
-        cout << "CV dang cho xu ly:" << endl;
-        xemCVchuathuchien(root);
+        bool found = false;
+        xemCVchuathuchien(root, found);
+        if (!found) { 
+        	cout << "Khong co cong viec nao chua thuc hien! " << endl;
+    	}
     }
     void xemCVtungayadenb(DayNode* node, int startDay, int endDay) {
         if (!node) return;
